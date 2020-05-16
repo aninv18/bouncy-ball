@@ -21,6 +21,7 @@ TagManager:
   - Particle
   - trigger3
   - plant
+  - trigger4
   layers:
   - Default
   - TransparentFX

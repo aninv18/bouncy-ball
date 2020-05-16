@@ -15,7 +15,7 @@ public class points : MonoBehaviour
     {
         GameObject[] npcs = GameObject.FindGameObjectsWithTag("egg");
         no_of_eggs = npcs.Length;
-        Debug.Log(no_of_eggs);
+        //Debug.Log(no_of_eggs);
         score = GetComponent<Text>();
         m1 = GameObject.Find("ball").GetComponent<movement>();
 

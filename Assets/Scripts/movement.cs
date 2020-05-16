@@ -19,7 +19,7 @@ public class movement : MonoBehaviour
     private float jumpTimer = 0f;    
     public bool isMovement = false;        
     public SpriteRenderer lever_G;
-    public bool stop = false;
+    public bool stop = false,stop1 = false;
     private GameObject coll;
     public Animator animator;
     
@@ -80,7 +80,7 @@ public class movement : MonoBehaviour
             score++;
             coll = col.gameObject;
             Invoke("des", 0.1f);   
-            Debug.Log(score);
+           // Debug.Log(score);
             return;           
         }
         
@@ -113,7 +113,9 @@ public class movement : MonoBehaviour
         {
             rb.velocity *= 0;
             rb.bodyType = RigidbodyType2D.Static;
-            stop = true;
+            stop = true;            
+            coll = col.gameObject;
+            Invoke("des", 0.5f);
         }
 
         if (col.tag.Equals("trigger2"))
@@ -126,12 +128,21 @@ public class movement : MonoBehaviour
             Invoke("normal", 1);
             
         }
+        /*if (col.tag.Equals("trigger4"))
+        {
+            rb.velocity *= 0;
+            rb.bodyType = RigidbodyType2D.Static;
+            stop1 = true;
+            coll = col.gameObject;
+            Invoke("des", 0.5f);
+            
+        }*/
 
         if (col.tag.Equals("plant"))
         {
             animator.SetBool("plant", true);
             
-            Invoke("setback", 0.3f);
+            Invoke("setback", 0.2f);
         }
         if (col.tag.Equals("Finish"))
         {
@@ -146,11 +157,11 @@ public class movement : MonoBehaviour
     {
         if(collision.collider.tag.Equals("enemy"))
         {
-            Debug.Log(collision.collider.GetType());
+            //Debug.Log(collision.collider.GetType());
             if (collision.collider.GetType() == typeof(CircleCollider2D))
             {
 
-                Debug.Log("yes");
+                //Debug.Log("yes");
                 collision.collider.GetComponent<ParticleSystem>().Play();
                 coll = collision.collider.gameObject;
                 Invoke("des", 0.1f);
@@ -175,7 +186,7 @@ public class movement : MonoBehaviour
     }
     void DD()
     {
-        Debug.Log("HELLO");
+        //Debug.Log("HELLO");
         c2.enabled = false;
         c1.enabled = true;
     }
@@ -202,7 +213,7 @@ public class movement : MonoBehaviour
     {
         
         AddForce = 30f;
-        AddThrust = 1500f;
+        AddThrust = 3500f;
         rb.freezeRotation = false;
         GameObject.FindGameObjectWithTag("Particle").GetComponent<ParticleSystem>().Stop();
         rb.gravityScale = 2.3f;

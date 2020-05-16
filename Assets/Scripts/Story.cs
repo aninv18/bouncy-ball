@@ -24,26 +24,35 @@ public class Story : MonoBehaviour
         
 
         
-        if (m1.stop == true)
+        if (Mathf.Round(time) == 2 && m1.stop == true)
             {
-            story1.text = "rock1";
-            story1.text = "rock";
+           
+            story1.text = "This is bounce's friend " +
+                          "Bumpy cracks!!! , a boulder";
                
             }
 
-        if (Mathf.Round(time) == 3 && m1.stop == true)
+        if (Mathf.Round(time) == 4 && m1.stop == true)
+            story1.text = "Press 2 to switch to bumpy " +
+                           "cracks and 1 for bounce";
+
+
+
+        if (Mathf.Round(time) == 5 && m1.stop == true)
         {
             f1 = GameObject.Find("rock_ball_sprite").GetComponent<fading>();
             f1.fade();
             m1.stop = false;
         }
-        if (Mathf.Round(time) == 5 )
+        if (Mathf.Round(time) == 6 )
         {
             m1.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            
-            
+            story1.text = "";       
 
         }
+
+
+
                                  
     }
 

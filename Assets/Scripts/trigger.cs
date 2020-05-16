@@ -22,7 +22,7 @@ public class trigger : MonoBehaviour
     {
         if (collision.tag.Equals("rock_ball"))
         {
-            Debug.Log("COLLIDED");
+            //Debug.Log("COLLIDED");
             b1 = true;
 
         }
