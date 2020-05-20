@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class movement : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public Rigidbody2D rb;
+    public GameObject rb;
     public float AddForce = 5f;
     public float AddThrust = 5f;
     public int score = 0;
@@ -22,7 +23,10 @@ public class movement : MonoBehaviour
     public bool stop = false,stop1 = false;
     private GameObject coll;
     public Animator animator;
-    
+    public bool complete = false;
+    public GameObject Canvas;
+
+
 
 
 
@@ -33,24 +37,28 @@ public class movement : MonoBehaviour
         c2.enabled = false;
         isMovement = true;
         lever_G.enabled = false;
+        DontDestroyOnLoad(rb);        
+        DontDestroyOnLoad(Canvas);
         
+
+
     }
 
 
-        // Update is called once per frame
-        void Update()
+    // Update is called once per frame
+    void Update()
     {
         if (Input.GetKey(KeyCode.RightArrow)) 
         { 
-            rb.AddForce(new Vector2(AddForce, 0f), ForceMode2D.Force); 
+            rb.GetComponent<Rigidbody2D>().AddForce(new Vector2(AddForce, 0f), ForceMode2D.Force); 
         }
 
         else if (Input.GetKey(KeyCode.LeftArrow)) 
-        { 
-            rb.AddForce(new Vector2(-(AddForce * 1.3f), 0f), ForceMode2D.Force);
+        {
+            rb.GetComponent<Rigidbody2D>().AddForce(new Vector2(-(AddForce * 1.3f), 0f), ForceMode2D.Force);
         }
         
-        if (rb.velocity.x >= 25f || rb.velocity.x <= -25f) { rb.velocity /= 2; }
+        if (rb.GetComponent<Rigidbody2D>().velocity.x >= 25f || rb.GetComponent<Rigidbody2D>().velocity.x <= -25f) { rb.GetComponent<Rigidbody2D>().velocity /= 2; }
 
         jumpTimer -= Time.deltaTime;        
         if (Input.GetKey(KeyCode.UpArrow) )
@@ -58,7 +66,7 @@ public class movement : MonoBehaviour
             if (jumpTimer <= 0f)
             {
                 jumpTimer = jumpingCoolDown;
-                rb.AddForce(Vector2.up * AddThrust, ForceMode2D.Force);
+                rb.GetComponent<Rigidbody2D>().AddForce(Vector2.up * AddThrust, ForceMode2D.Force);
             }
             isMovement = true;
             }
@@ -111,8 +119,8 @@ public class movement : MonoBehaviour
 
         if (col.tag.Equals("trigger"))
         {
-            rb.velocity *= 0;
-            rb.bodyType = RigidbodyType2D.Static;
+            rb.GetComponent<Rigidbody2D>().velocity *= 0;
+            rb.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             stop = true;            
             coll = col.gameObject;
             Invoke("des", 0.5f);
@@ -146,8 +154,9 @@ public class movement : MonoBehaviour
         }
         if (col.tag.Equals("Finish"))
         {
-            rb.bodyType = RigidbodyType2D.Static;
-            
+            rb.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            complete = true;
+            Invoke("scorecard", 2);
             GameObject.FindGameObjectWithTag("Respawn").GetComponent<ParticleSystem>().Play();
         }
 
@@ -174,7 +183,10 @@ public class movement : MonoBehaviour
     
     
 
-
+    void scorecard()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+    }
     void Dmove()
     {  
         door.transform.position = door.transform.position + Vector3.up;
@@ -205,18 +217,18 @@ public class movement : MonoBehaviour
         AddForce = 10f;
         AddThrust = 800f;
         gameObject.transform.rotation = Quaternion.Euler(0, 0, 180);
-        rb.freezeRotation = true;
+        rb.GetComponent<Rigidbody2D>().freezeRotation = true;
         GameObject.FindGameObjectWithTag("Particle").GetComponent<ParticleSystem>().Play();
-        rb.gravityScale = 0.3f;        
+        rb.GetComponent<Rigidbody2D>().gravityScale = 0.3f;        
     }
     void normal()
     {
         
         AddForce = 30f;
         AddThrust = 3500f;
-        rb.freezeRotation = false;
+        rb.GetComponent<Rigidbody2D>().freezeRotation = false;
         GameObject.FindGameObjectWithTag("Particle").GetComponent<ParticleSystem>().Stop();
-        rb.gravityScale = 2.3f;
+        rb.GetComponent<Rigidbody2D>().gravityScale = 2.3f;
 
 
     }

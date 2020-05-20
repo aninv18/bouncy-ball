@@ -7,7 +7,7 @@ public class Story : MonoBehaviour
     public Text story1;
    // public Text story2;
     movement m1;
-    float time;
+    public float time;
     fading f1;
     // Start is called before the first frame update
     void Start()

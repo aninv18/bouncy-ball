@@ -22,6 +22,7 @@ TagManager:
   - trigger3
   - plant
   - trigger4
+  - timer
   layers:
   - Default
   - TransparentFX
